@@ -1,0 +1,30 @@
+\documentclass[10pt]{article}
+
+\usepackage{math}
+
+\author{Alan Sorani}
+\title{Proof of Correctedness for the Sum Square Difference}
+
+\begin{document}
+\maketitle
+
+\begin{proposition*}
+Let $N \in \mbb{N}_+$ be a positive integer.
+Then
+\begin{align*}
+	\prs{\sum_{i \in \brs{N}} i}^2 - \sum_{i \in \brs{N}} i^2 = 2 \sum_{i,j \in \binom{\brs{N}}{2}} ij \text{.}
+\end{align*}
+\end{proposition*}
+
+\begin{proof}
+	By the multinomial theorem,
+	\begin{align*}
+	\prs{\sum_{i \in \brs{N}} i}^2 &= \sum_{\substack{\sum_{i\in\brs{N}} k_i = 2 \\ k_i \geq 0}} \binom{2}{k_1,k_2,\ldots,k_N} \prod_{i \in \brs{N}} i^{k_i}
+	\\&=
+	\sum_{i \in \brs{N}} \binom{2}{2} i^2 + \sum_{\substack{i,j \in \binom{\brs{N}}{2}}} \binom{2}{1} ij
+	\\&=
+	\sum_{i \in \brs{N}} i^2 + 2 \sum_{i,j \in \binom{\brs{N}}{2}} ij \text{.}
+	\end{align*}
+\end{proof}
+
+\end{document}
