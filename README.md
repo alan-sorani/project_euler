@@ -1,6 +1,6 @@
 # project euler
 
-Solutions for the first 100 problems of Project Euler. Other solutions will be kept private as to comply with the site rules. However, their progress will be tracked here.
+Solutions for the first 100 problems of [Project Euler](https://projecteuler.net/). Other solutions will be kept private as to comply with the site rules. However, their progress will be tracked here.
 
 | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved |
 | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: |
