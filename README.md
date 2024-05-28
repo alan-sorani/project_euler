@@ -3,7 +3,7 @@
 Solutions for the first 100 problems of Project Euler. Other solutions will be kept private as to comply with the site rules. However, their progress will be tracked here.
 
 | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved | Problem |  Solved |
-| ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- | ------- |
+| :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: |
 |    1    |    √    |   101   |         |   201   |         |   301   |         |   401   |         |   501   |         |   601   |         |   701   |         |   801   |         |
 |    2    |    √    |   102   |         |   202   |         |   302   |         |   402   |         |   502   |         |   602   |         |   702   |         |   802   |         |
 |    3    |    √    |   103   |         |   203   |         |   303   |         |   403   |         |   503   |         |   603   |         |   703   |         |   803   |         |
