@@ -1,0 +1,62 @@
+\documentclass[10pt]{article}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+%---MATH---
+
+\usepackage{math}
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---TITLE---
+
+\author{Alan Sorani}
+\title{Proof of Correctedness for the Sum Square Difference}
+
+\begin{document}
+\maketitle
+
+\begin{lemma} \label{lemma:prime-upper-bound}
+Let $n \in \brs{6, e^{95}}$ be an integer and let $p_n$ be the $n$\textsuperscript{th} prime number.
+We have
+\begin{align*}
+p_n \leq n \prs{\log n + \log \log n} \text{.}
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+See \cite{prime-bounds-rosser}.
+\end{proof}
+
+\begin{theorem}
+Let $n \in \brs{6, e^{95}}$ be an integer, let $C = n \prs{\log n + \log \log n}$, such that $p_n \leq C$ by \Cref{lemma:prime-upper-bound}. The $n$\textsuperscript{th} prime number can be computed as follows.
+
+\begin{enumerate}
+\item Let $S_1 = \brs{C} \setminus \set{1}$ be a set of candidates, and let $i = 1$.
+\item Let $m = \min\prs{S}$ be the minimum of $S$.
+\item If $i = n$, take $p_n = m$. Otherwise, take $S_{i+1}$ to be the set $S_i$ minus all the multiples of $m$, and then increase $i$ by $1$.
+\item Repeat steps 2-3.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+We prove inductively on $i$ that $\min\prs{S_i} = p_i$, which shows the result.
+\begin{description}
+\item[Base:] We have $S_1 = \brs{C} \setminus \set{1}$ so $\min\prs{S_1} = 2$, which is the first prime.
+
+\item[Step:] Assume the minimum of $S_k$ is the $k$\textsuperscript{th} prime for all $k < i$. Then $\min\prs{S_i}$ is not divisible by these primes $p_1, \ldots, p_{i-1}$, by definition of $S_i$. Hence $\min\prs{S_i} \geq p_i$. However, $p_i \in S_i$ since $p_i \in S_1$ and since at each step we only removed multiples of one of $p_1, \ldots, p_{i-1}$. Hence $\min\prs{S_i} = p_i$.
+\end{description}
+\end{proof}
+
+\printbibliography
+
+\end{document}

@@ -1,0 +1,40 @@
+\documentclass[10pt]{article}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+%---MATH---
+
+\usepackage{math}
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---TITLE---
+
+\author{Alan Sorani}
+\title{Proof of Correctedness for Special Pythagorean Triplets}
+
+\begin{document}
+\maketitle
+
+\begin{theorem}
+Let $a,b,c,S$ be natural numbers such that $a^2 + b^2 = c^2$ and $a+b+c=S$.
+
+We have $a,b,c \leq \frac{S}{2}$.
+\end{theorem}
+
+\begin{proof}
+Consider a right-angled triangle $T$ with side lengths $a,b,c$. The perimeter of the triangle $T$ is $S$. By the triangle inequality, $c \leq a + b$, hence $2c \leq a + b + c = S$, so $c \leq \frac{S}{2}$. Since $a,b \leq c$, we get the result.
+\end{proof}
+
+\printbibliography
+
+\end{document}

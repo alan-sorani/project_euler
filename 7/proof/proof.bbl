@@ -1,0 +1,66 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{anyt/global//global/global}
+    \entry{prime-bounds-rosser}{article}{}
+      \name{author}{1}{}{%
+        {{hash=9bbe11450e0f04fcaa18601ef8471adc}{%
+           family={Rosser},
+           familyi={R\bibinitperiod},
+           given={Barkley},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Johns Hopkins University Press}%
+      }
+      \strng{namehash}{9bbe11450e0f04fcaa18601ef8471adc}
+      \strng{fullhash}{9bbe11450e0f04fcaa18601ef8471adc}
+      \strng{bibnamehash}{9bbe11450e0f04fcaa18601ef8471adc}
+      \strng{authorbibnamehash}{9bbe11450e0f04fcaa18601ef8471adc}
+      \strng{authornamehash}{9bbe11450e0f04fcaa18601ef8471adc}
+      \strng{authorfullhash}{9bbe11450e0f04fcaa18601ef8471adc}
+      \field{labelalpha}{Ros41}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{00029327, 10806377}
+      \field{journaltitle}{American Journal of Mathematics}
+      \field{number}{1}
+      \field{title}{Explicit Bounds for Some Functions of Prime Numbers}
+      \field{urlday}{16}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{volume}{63}
+      \field{year}{1941}
+      \field{urldateera}{ce}
+      \field{pages}{211\bibrangedash 232}
+      \range{pages}{22}
+      \verb{urlraw}
+      \verb http://www.jstor.org/stable/2371291
+      \endverb
+      \verb{url}
+      \verb http://www.jstor.org/stable/2371291
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

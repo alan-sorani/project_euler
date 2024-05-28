@@ -13,7 +13,7 @@ def product_set(s, n):
 """
 sum_of_multiples
 
-Input: a set factors_set of prime factors and a maximum number max_num
+Input: an array factors_set of prime factors and a maximum number max_num
 
 Output: the sum of all multiples of any of the factors that are less than or equal to the maximum number
 

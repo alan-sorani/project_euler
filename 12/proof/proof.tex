@@ -1,0 +1,73 @@
+\documentclass[10pt]{article}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+%---MATH---
+
+\usepackage{math}
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---TITLE---
+
+\author{Alan Sorani}
+\title{Proof of Correctedness for Highly Divisible Triangular Numbers}
+
+\begin{document}
+\maketitle
+
+\begin{lemma}
+Let
+$m \in \mbb{N}_+$
+and let
+\begin{align*}
+m = \prod_{i \in \brs{k}} p_i^{\alpha_i}
+\end{align*}
+be its prime factorization.
+Then
+\begin{align*}
+\omega\prs{m} = \prod_{i \in \brs{k}} \prs{\alpha_i + 1} \text{,}
+\end{align*}
+where $\omega\prs{m}$ denotes the number of divisors of $m$.
+\end{lemma}
+
+\begin{proof}
+The divisors of $m$ are the numbers of the form
+$\prod_{i \in \brs{k}} p_i^{\beta_i}$
+for $\beta_i \in \set{0, \ldots, \alpha_i}$, and since one can choose each $\beta_i$ separately and each choice of $\prs{\beta_i}_{i \in \brs{k}}$ gives a different divisor, we get the result.
+\end{proof}
+
+\begin{corollary}
+For coprime $m,n \in \mbb{N}_+$ we have
+\begin{align*}
+\omega\prs{mn} = \omega\prs{m} \omega\prs{n} \text{.}
+\end{align*}
+\end{corollary}
+
+\begin{corollary}
+Let $T_n$ denote the $n$\textsuperscript{th} triangular number, i.e.
+\begin{align*}
+T_n = \sum_{k \in \brs{n}} k = \frac{n\prs{n+1}}{2} \text{.}
+\end{align*}
+We have
+\begin{align*}
+\omega\prs{T_n} =
+\begin{cases}
+\omega\prs{\frac{n}{2}} \omega\prs{n+1} & n \in 2\mbb{N}_+ \\
+\omega\prs{n} \omega\prs{\frac{n+1}{2}} & n \notin 2 \mbb{N}_+
+\end{cases}
+\end{align*}
+\end{corollary}
+
+\printbibliography
+
+\end{document}
