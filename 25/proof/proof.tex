@@ -1,0 +1,91 @@
+\documentclass[10pt]{article}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+%---MATH---
+
+\usepackage{math}
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---TITLE---
+
+\author{Alan Sorani}
+\title{Proof of $1000$-digit Fibonacci Number}
+
+\begin{document}
+\maketitle
+
+We want to invert the explicit formula for the Fibonacci numbers as to get an $\mrm{O}\prs{1}$ solution.
+Since
+$F_n$ is approximately $\frac{\phi^n}{\sqrt{5}}$, the index $n$ of $F_n$ will be approximated by $\log_\phi\prs{\sqrt{5} F_n}$.
+
+\begin{theorem}
+Let $F_n$ be the $n$\textsuperscript{th} Fibonacci number, for $n > 1$. Then if $F$ is a Fibonacci number, its index $n$ such that $F = F_n$ is given by $n\prs{F} = \brs{\log_\varphi\prs{\sqrt{5}F}}$, where $\brs{\cdot}$ is rounding to the nearest integer.
+\end{theorem}
+
+\begin{proof}
+It is known that $F_n = \frac{\varphi^n - \psi^n}{\sqrt{5}}$, where $\varphi = \frac{1 + \sqrt{5}}{2}$ is the golden ratio and where $\psi = \frac{1 - \sqrt{5}}{2}$.
+We get
+\begin{align*}
+\abs{F_n - \frac{\psi^n}{\sqrt{5}}} &= \abs{\frac{\psi^n}{\sqrt{5}}}
+\\&= \frac{1}{\sqrt{5}} \abs{\psi^n}
+\end{align*}
+where $\abs{\psi^n} < \frac{1}{2}$ for $n > 1$ since
+\begin{align*}
+\abs{\psi} = \frac{\sqrt{5} - 1}{2} < \frac{3-1}{2} = 1 < \sqrt{2} \text{.}
+\end{align*}
+Hence
+\begin{align*}
+\abs{F_n - \frac{\psi^n}{\sqrt{5}}} \leq \frac{1}{2 \sqrt{5}} \text{.}
+\end{align*}
+
+Taking $N\prs{F} = \log_\varphi\prs{\sqrt{5} F}$, since $\varphi^x$ is convex in $x$ we get that
+\begin{align*}
+\abs{N\prs{F_n} - n} &\leq \abs{\varphi^{N\prs{F_n}} - \varphi^n}
+\\&=
+\abs{\varphi^{\log_{\varphi}\prs{\sqrt{5}F}} - \varphi^n}
+\\&= \abs{\sqrt{5}F_n - \varphi^n}
+\\&= \sqrt{5} \abs{F_n - \frac{\varphi^n}{\sqrt{5}}}
+\\&\leq \frac{\sqrt{5}}{2 \sqrt{5}} = \frac{1}{2} \text{.}
+\end{align*}
+Hence
+\begin{align*}
+n = \brs{N\prs{F}} = \brs{\log_{\varphi}\prs{\sqrt{5}F}} \text{,}
+\end{align*}
+as required.
+\end{proof}
+
+\begin{corollary}
+The minimal $n \in \mbb{N}$ such that $F_n$ has at least $k$ digits is one of the following
+\begin{align*}
+\brs{\log_{\varphi}\prs{\sqrt{5}} + \prs{k-1}\log_{\varphi}\prs{10}} \text{,} \\
+\brs{\log_{\varphi}\prs{\sqrt{5}} + \prs{k-1}\log_{\varphi}\prs{10}} + 1 \text{.}
+\end{align*}
+\end{corollary}
+
+\begin{proof}
+We need to find $n$ such that $F_n \geq 10^{k-1}$ and $F_{n-1} \leq 10^{k-1}$. We have
+\begin{align*}
+n = \brs{\log_\varphi\prs{\sqrt{5} F_n}} \geq \brs{\log_\varphi\prs{\sqrt{5} \cdot 10^{k-1}}}
+\end{align*}
+and
+\begin{align*}
+n-1 = \brs{\log_\varphi\prs{\sqrt{5}F_{n-1}}} \leq \brs{\log_\varphi\prs{\sqrt{5} \cdot 10^{k-1}}} \text{.}
+\end{align*}
+Therefore, $n$ is either $\brs{\log_\varphi\prs{\sqrt{5} \cdot 10^{k-1}}}$ or $\brs{\log_\varphi\prs{\sqrt{5} \cdot 10^{k-1}}} + 1$.
+Using basic properties of the logarithm, we get the result.
+\end{proof}
+
+\printbibliography
+
+\end{document}
