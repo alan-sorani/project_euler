@@ -1,0 +1,64 @@
+\documentclass[10pt]{article}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+%---MATH---
+
+\usepackage{math}
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---TITLE---
+
+\author{Alan Sorani}
+\title{Proof for Counting Lexicographic Permutations}
+
+\begin{document}
+\maketitle
+
+We start by stating a well-known theorem.
+
+\begin{theorem}
+The number of permutations of a set of $n$ elements are $n!$.
+\end{theorem}
+
+\begin{corollary}
+The number of permutations of a set of $n$ elements such that the first element is fixed is $\prs{n-1}!$.
+\end{corollary}
+
+\begin{proof}
+Permutations of $n$ elements such that the first element is fixed, correspond directly to permutations of the other elements.
+\end{proof}
+
+\begin{corollary}
+In order to find the $k$\textsuperscript{th} permutation of the set $\set{0, 1, \ldots, 9}$, in lexicographic order, we may follow the following algorithm.
+
+\begin{enumerate}
+\item Let $m$ be the number of elements in the set $\set{0, \ldots, 9}$ minus one.
+\item Set the left-most remaining digit to $\ceil{\frac{k}{m!}}$\textsuperscript{th} smallest digit.
+\item Change the value of $k$ to $k - \prs{\ceil{\frac{k}{m!}} - 1} \cdot m!$, and decrease the value of $m$ by $1$.
+\item If there are more digits to determine, go back to step $2$ with the rest of the digits available.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Each digit appears as the left-most digit in the first $m!$ permutations, where $m$ is the number of digits left to look at.
+The left-most digit is therefore determined by the number of times $9!$ goes into $k$.
+
+The next digit is determined similarly by the number of times $8!$ goes into how many permutations are left to count from the first one with the first digit being fixed, etc.
+\end{proof}
+
+
+
+\printbibliography
+
+\end{document}
