@@ -1,0 +1,74 @@
+\documentclass[10pt]{article}
+
+%---HYPERLINKS---
+
+\RequirePackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all     %set to all if you want both sections and subsections linked
+}
+
+%---MATH---
+
+\usepackage{math}
+
+%---BIBLIOGRAPHY---
+
+\usepackage[backend=biber, style=alphabetic]{biblatex}
+\addbibresource{bibliography.bib}
+
+%---TITLE---
+
+\author{Alan Sorani}
+\title{Proof for Monopoly Probabilities}
+
+\begin{document}
+\maketitle
+
+\begin{definition}[Generalized Monopoly]
+A game of \emph{Generalized Monopoly} is the same as a game of Monopoly only where instead of rolling $2$ dice each of which are $6$-sided (2d6), one rolls $k$ dice each of which are $s$-sided ($k$d$s$).
+\end{definition}
+
+\begin{definition}[Diagonal Roll]
+A roll of $k$ dice each of which has $s$ sides is called \emph{diagonal} if all the dice show the same number. I.e. a roll is diagonal if it's an element of the diagonal $\Delta^k \brs{s} \coloneqq \bigcup_{x \in \brs{s}} \prs{\set{x}^k}$.
+\end{definition}
+
+\begin{axiom}
+In Generalized Monopoly, one goes to Jail if one rolls a third consecutive diagonal roll, where one restarts counting upon going to Jail.
+\end{axiom}
+
+\begin{proposition}
+Let $p_{\mrm{jail}}$ be the probability of being sent to Jail via a third consecutive diagonal roll, in a turn. Let $p_{\mrm{diag}}$ be the probability of getting a diagonal roll. Then
+\begin{align*}
+p_{\mrm{jail}} = \frac{1 + 2 p_{\mrm{diag}} - \sqrt{1 + 4 p_{\mrm{diag}}^2}}{2 p_{\mrm{diag}}} \text{.}
+\end{align*}
+\end{proposition}
+
+\begin{note}
+In the above proposition, we ignore the fact that the chance of getting a diagonal roll in a previous roll is not in general $p_{\mrm{diag}}$ and is rather dependent on the position of the player, as this is affected by the likelyhood of being in any position on the board. However, we suspect that the error due to this calculation would not be too significant.
+\end{note}
+
+\begin{proof}
+The probability of going to Jail due to consecutive diagonal rolls is the probability that the last roll is diagonal times the probability that the two previous rolls were diagonal and didn't result in being sent to Jail. Hence
+\begin{align*}
+p_{\mrm{jail}} &= p_{\mrm{diag}}^3 \cdot \prs{1 - P\prs{\mrm{jail} \middle\vert \mrm{double}}}^2
+\\&= p_{\mrm{diag}}^3 \cdot \prs{1 - \frac{p_{\mrm{jail}}}{p_{\mrm{double}}}}^2
+\\&=
+p_{\mrm{diag}}^3 \cdot \prs{\frac{p_{\mrm{diag}} -p_{\mrm{jail}}}{p_{\mrm{diag}}}}^2
+\\&=
+p_{\mrm{diag}} \cdot \prs{p_{\mrm{diag}} - p_{\mrm{jail}}}^2
+\\&=
+p_{\mrm{diag}}^3 - 2 p_{\mrm{diag}} p_{\mrm{jail}} + p_{\mrm{diag}} p_{\mrm{jail}}^2 \text{.}
+\end{align*}
+This leads to a quadratic equation where the above solution is the only one within the range $\brs{0,1}$.
+\end{proof}
+
+\begin{corollary}
+The probability of going to Jail from consecutive diagonal rolls given the last roll is $i$, is 
+\[\frac{P\prs{\mrm{diag} \middle\vert \mrm{roll} = i}}{p_{\mrm{diag}}} \cdot p_{\mrm{jail}} =
+\frac{\prs{1 + 2 p_{\mrm{diag}} - \sqrt{1 + 4 p_{\mrm{diag}}^2}} \cdot P\prs{\mrm{diag} \middle\vert \mrm{roll} = i}}{2 p_{\mrm{diag}}^2}\text{.}\]
+\end{corollary}
+
+\printbibliography
+
+\end{document}
