@@ -1,1 +1,3 @@
-solve problem 6 for general powers using the faulhaber's theorem
+- solve problem 6 for general powers using the faulhaber's theorem
+- solve 101 using lagrange interpolation
+- solve 83 using dijkstra's
