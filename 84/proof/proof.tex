@@ -40,7 +40,7 @@ In Generalized Monopoly, one goes to Jail if one rolls a third consecutive diago
 \begin{proposition}
 Let $p_{\mrm{jail}}$ be the probability of being sent to Jail via a third consecutive diagonal roll, in a turn. Let $p_{\mrm{diag}}$ be the probability of getting a diagonal roll. Then
 \begin{align*}
-p_{\mrm{jail}} = \frac{1 + 2 p_{\mrm{diag}} - \sqrt{1 + 4 p_{\mrm{diag}}^2}}{2 p_{\mrm{diag}}} \text{.}
+p_{\mrm{jail}} = \frac{1 + 2 p_{\mrm{diag}}^2 - \sqrt{1 + 4 p_{\mrm{diag}}^2}}{2 p_{\mrm{diag}}} \text{.}
 \end{align*}
 \end{proposition}
 
@@ -66,7 +66,7 @@ This leads to a quadratic equation where the above solution is the only one with
 \begin{corollary}
 The probability of going to Jail from consecutive diagonal rolls given the last roll is $i$, is 
 \[\frac{P\prs{\mrm{diag} \middle\vert \mrm{roll} = i}}{p_{\mrm{diag}}} \cdot p_{\mrm{jail}} =
-\frac{\prs{1 + 2 p_{\mrm{diag}} - \sqrt{1 + 4 p_{\mrm{diag}}^2}} \cdot P\prs{\mrm{diag} \middle\vert \mrm{roll} = i}}{2 p_{\mrm{diag}}^2}\text{.}\]
+\frac{\prs{1 + 2 p_{\mrm{diag}}^2 - \sqrt{1 + 4 p_{\mrm{diag}}^2}} \cdot P\prs{\mrm{diag} \middle\vert \mrm{roll} = i}}{2 p_{\mrm{diag}}^2}\text{.}\]
 \end{corollary}
 
 \printbibliography
