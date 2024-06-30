@@ -1,4 +1,3 @@
-import numpy as np
 from sympy import Matrix
 from time import time
 
