@@ -6,7 +6,7 @@ For this value to be an integer n, we get that :math:`16 n^2 = 4 a^2 b^2 - b^4`,
 '''
 
 max_perimeter = 1_000_000_000
-a = 2
+a = 3
 res = 0
 while((a-1)*3 <= max_perimeter):
     for b in {a-1, a+1}:
@@ -14,5 +14,6 @@ while((a-1)*3 <= max_perimeter):
         if(test == int(np.rint(test))):
             print(f"({a},{a},{b}): {np.sqrt(a**2 * b**2 / 4 - b**4/16)}")
             res += 2*a + b
-    a += 1
+    # since b has to be even, a has to be odd
+    a += 2
 print(res)
