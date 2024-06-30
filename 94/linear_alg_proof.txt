@@ -23,10 +23,10 @@ It is shown in [url]https://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_
 
 We define the following.
 
-- $U_1 = \left\{(m, h, 2m + 1) \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m + 1)^2} \right\}$
-- $U_2 = \left\{(h, m, 2m + 1) \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m + 1)^2} \right\}$
-- $L_1 = \left\{(m, h, 2m - 1) \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m - 1)^2} \right\}$
-- $L_2 = \left\{(h, m, 2m - 1) \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m - 1)^2} \right\}$
+- $U_1 = \left\{\begin{pmatrix}m \\ h \\ 2m + 1\end{pmatrix} \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m + 1)^2} \right\}$
+- $U_2 = \left\{\begin{pmatrix}h \\ m \\ 2m + 1\end{pmatrix} \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m + 1)^2} \right\}$
+- $L_1 = \left\{\begin{pmatrix}m \\ h \\ 2m - 1\end{pmatrix} \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m - 1)^2} \right\}$
+- $L_2 = \left\{\begin{pmatrix}h \\ m \\ 2m - 1\end{pmatrix} \middle\vert \substack{a,b,c \in \mathbb{Z} \\ m^2 + h^2 = (2m - 1)^2} \right\}$
 
 We notice that $\begin{pmatrix} 3 \\ 4 \\ 5 \end{pmatrix} \in L_1$. Direct computation gives $C u_1 \in L_2$ for all $u_1 \in U_1$, and $A l_2 \in U_1$ for all $l_2 \in L_2$. Hence, letting $v_0 = \begin{pmatrix} 3 \\ 4 \\ 5 \end{pmatrix}$ we get infinitely-many primitive Pythagorean triplets $v_0, C v_0, AC v_0, CAC v_0, ACAC v_0, \ldots$
 
