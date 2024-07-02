@@ -2,3 +2,4 @@
 - solve 83 using dijkstra's
 - in combinatorics_utils, add an option for sum_of_k_naturals to set an upper bound for the summands
 - solve 94 using Pell's equations
+- skip powers that aren't relevant in exercise 47 (create a function for going over subsets of size 4)
