@@ -105,6 +105,21 @@ def gaussian_binomial(n : int, k : int, reduced = False):
         binomial *= (gaussian_bracket(n - i) / gaussian_bracket(i + 1))
     return (binomial, k * (n - k))
 
+@cache
+def sums_of_k_naturals_no_order(num : int, k : int, max_summand : int):
+    if (k < 1):
+        return 0
+    if (num in {0,1}):
+        return 1
+    if (k == 1):
+        return (num <= max_summand)
+    result = 0
+    # iterate over the highest number in the sum
+    for i in range(1, max_summand+1):
+        new_max_summand = np.min([num - i, i])
+        result += sums_of_k_naturals_no_order(num-i, k-1, new_max_summand)
+    return result
+
 def sums_of_k_naturals(
         num : int,
         k : int,
@@ -158,23 +173,9 @@ def sums_of_naturals_no_order(num : int, max_summand : int):
     # iterate over the highest number in the sum
     for i in range(1, max_summand+1):
         new_max_summand = np.min([num - i, i])
-        result += sum_of_naturals_no_order(num-i, new_max_summand)
+        result += sums_of_naturals_no_order(num-i, new_max_summand)
     return result
 
-@cache
-def sums_of_k_naturals_no_order(num : int, k : int, max_summand : int):
-    if (k < 1):
-        return 0
-    if (num in {0,1}):
-        return 1
-    if (k == 1):
-        return (num <= max_summand)
-    result = 0
-    # iterate over the highest number in the sum
-    for i in range(1, max_summand+1):
-        new_max_summand = np.min([num - i, i])
-        result += sums_of_k_naturals_no_order(num-i, k-1, new_max_summand)
-    return result
 
 def sums_of_naturals(
         num : int,
@@ -196,14 +197,14 @@ def sums_of_naturals(
         The number of ways to write n as the sum of natural numbers. If order = True, the ordering of the numbers matters, otherwise it doesn't.
     """
     if(not order): 
-        return sum_of_naturals_no_order(num, num)
+        return sums_of_naturals_no_order(num, num)
     
     res = 0
     for k in range(1, num + 1):
         res += sums_of_k_naturals(
                     num = num,
                     k = k,
-                    order=order,
+                    order=True,
                     zeros=False
                 )
     return res
