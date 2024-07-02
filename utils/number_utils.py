@@ -25,6 +25,32 @@ def is_prime(n : int):
             result = False
     return result
 
+def sieve_of_eratosthenes(num : int):
+    """
+    Returns a list containing all the integers up to a given number. 
+
+    Parameters
+    ----------
+    num : int
+        An integer.
+
+    Returns
+    -------
+    list[int]
+        A list of all the primes up to num.
+    """
+    result = [True] * (num + 1) #binary array corresponding to numbers from 0 to num
+    i = 2
+    while(i < num):
+        if (not result[i]):
+            i = i + 1
+            continue
+        for j in range(i**2, num+1, i):
+            result[j] = False
+        i = i + 1
+    return [i for i in range(2, num + 1) if result[i]]
+
+
 
 if(__name__ == "__main__"):
     for num in pandigitals(reverse = True):
