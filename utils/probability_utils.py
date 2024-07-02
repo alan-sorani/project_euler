@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.special import binom
+from math import comb as binom
 
 def dice_sum_distribution(dice_num : int, dice_sides : int):
     """
