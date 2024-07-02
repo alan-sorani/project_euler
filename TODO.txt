@@ -1,3 +1,4 @@
 - solve problem 6 for general powers using the faulhaber's theorem
 - solve 83 using dijkstra's
 - in combinatorics_utils, add an option for sum_of_k_naturals to set an upper bound for the summands
+- solve 94 using Pell's equations
