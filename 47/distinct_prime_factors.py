@@ -6,6 +6,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 utils_path = "/".join(dir_path.split("/")[:-1] + ['utils'])
 sys.path.append(utils_path)
 from number_utils import *
+from combinatorics_utils import *
 
 def increment_sequence(sequence: list[int], max_vals: list[int], skip = False):
     """
@@ -55,16 +56,24 @@ def increment_sequence(sequence: list[int], max_vals: list[int], skip = False):
 
 def find_four_consecutive_prime_products(num: int):
     primes = np.array(sieve_of_eratosthenes(num))
-    four_prime_sets = list(itertools.combinations(primes, 4))
-    num_sets = len(four_prime_sets)
+    four_prime_sets = sublist_generator(primes, 4)
     nums_found = set()
     res = None
-    if(four_prime_sets == 0):
-        return res
-    for prime_set in four_prime_sets:
+    skip = 0
+    while(True):
+        if(skip == 4):
+            break
+        try:
+            if(skip > 0):
+                prime_set = four_prime_sets.send(f"skip={skip}")
+            else:
+                prime_set = next(four_prime_sets)
+        except StopIteration:
+            break
         if(np.prod(prime_set) > num):
+            skip += 1
             continue
-        print(prime_set)
+        skip = 0
         max_powers = np.array([int(np.log(num)/np.log(prime)) for prime in prime_set])
         powers = np.array([1 for i in range(4)])
         i = 0
@@ -78,17 +87,25 @@ def find_four_consecutive_prime_products(num: int):
                 continue
             
             nums_found.add(product)
-            if(
-                    ({product - 3, product - 2, product - 1} <= nums_found) or
-                    ({product - 2, product - 1, product + 1} <= nums_found) or
-                    ({product - 1, product + 1, product + 2} <= nums_found) or
-                    ({product + 1, product + 2, product + 3} <= nums_found)
-            ):
-                return product
-
             stop = not increment_sequence(powers, max_powers)
+    
+    nums_found = list(nums_found)
+    nums_found.sort()
+
+    for i in range(len(nums_found)-4):
+        num = nums_found[i]
+        next1 = nums_found[i+1]
+        next2 = nums_found[i+2]
+        next3 = nums_found[i+3]
+        if((next1 == num + 1) and
+           (next2 == num + 2) and
+           (next3 == num + 3)
+        ):
+            res = num
+            break
+
     return res
 
 if __name__ == "__main__":
-    large_num = 1000
+    large_num = 10**6
     print(find_four_consecutive_prime_products(large_num))

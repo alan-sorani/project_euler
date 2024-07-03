@@ -30,6 +30,8 @@ def increment_sublist_index(
     boolean
         True, unless indices are all maxed out in which case this returns False.
     """
+    if(skip >= len(indices)):
+        raise ValueError("Received value of skip variable exceeds maximal possible value.")
     if(indices == [i + max_index - len(indices) for i in range(len(indices))]):
         return False
     incremented_index = None
@@ -79,7 +81,6 @@ def sublist_generator(
         if(input[:4] == "skip"):
             try:
                 skip = int(input.split("=")[1])
-                print(f"skipping {skip}")
             except ValueError:
                 "Generator unable to handle received value." 
             stop = not increment_sublist_index(indices, len(list_) - 1, skip)
