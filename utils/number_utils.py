@@ -190,6 +190,86 @@ def divisors_up_to(num: int):
         divisors[key] = factorization_to_divisors(value)
     return divisors
 
+
+def factorization_to_divisors(factorization: list[tuple[int,int]]):
+    """
+    Takes a factorization of a number as outputted by factorize_up_to and returns a list of the number's divisors.
+
+    Parameters
+    ----------
+    factorization: list[tuple[int,int]]
+        A factorization of a positive integer, as outputted by factorize_up_to.
+    Returns
+    -------
+    list[int]
+        A list of the number's divisors.
+    """
+    res = []
+    length = len(factorization)
+    if(length == 0):
+        return [1]
+    primes = [factorization[i][0] for i in range(length)]
+    shape = [factorization[i][1]+1 for i in range(length)]
+    list_powers = index_iterator(shape = shape)
+    for powers in list_powers:
+        res += [np.prod(np.array(primes) ** np.array(powers))]
+    return res
+
+def divisors_up_to(num: int):
+    """
+    Returns a dictionary with keys being all the numbers up to num, and the value for each number is a list of its divisors.
+
+    Parameters
+    ----------
+    num: int
+        A positive integer.
+    Returns
+    -------
+    dict[int, list[int]]
+        A dictionary with keys being all the positive integers up to num, and the value for each number is a list of its divisors.
+    """
+    divisors = {}
+    factorizations = factorize_up_to(num)
+    for key,value in factorizations.items():
+        divisors[key] = factorization_to_divisors(value)
+    return divisors
+
+def amicable_numbers_up_to(num: int):
+    """
+    Returns a list of all the amicable numbers to a given positive integer.
+
+    Parameters
+    ----------
+    num: int
+        A positive integer.
+    Returns
+    -------
+    list[int]
+        A list of all the amicable numbers up to num.
+    """
+    res = []
+
+    divisors = divisors_up_to(num)
+    divisor_sums = {}
+    for key in divisors:
+        divisor_sums[key] = np.sum(divisors[key]) - key
+    max_divisor_sum = np.max([value for key,value in divisor_sums.items()])
+
+    divisors = divisors_up_to(max_divisor_sum)
+    divisor_sums = {}
+    for key in divisors:
+        divisor_sums[key] = np.sum(divisors[key]) - key
+    
+    for key,value in divisor_sums.items():
+        if(key == 1 or key == value or value > max_divisor_sum):
+            continue
+        if(divisor_sums[value] == key):
+            res += [key, value]
+
+    res = [value for value in res if value <= num]
+    
+    return list(set(res))
+
 if(__name__ == "__main__"):
     for num in pandigitals(reverse = True):
         print(num)
