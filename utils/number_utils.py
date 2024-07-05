@@ -129,7 +129,6 @@ def factorize_up_to(num: int):
     primes = sieve_of_eratosthenes(num)
     num_primes = len(primes)
     res = dict([(x,[]) for x in range(1, num+1)])
-    prev_time_diff, time_diff = 0,0
 
     for prime in primes:
         # orders of divisibility for the specific prime
