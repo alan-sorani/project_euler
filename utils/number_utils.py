@@ -124,27 +124,26 @@ def factorize_up_to(num: int):
         A positive integer.
     Returns
     -------
-    A dictionary with keys are the positive integers up to num, and the values are their prime factorizations, as a list [(p_1, k_1), ..., (p_m, k_m)] where the number is the product of p_i^{k_i}.
+    A dictionary where the keys are the positive integers up to num, and the values are their prime factorizations, as a list [(p_1, k_1), ..., (p_m, k_m)] where the number is the product of p_i^{k_i}.
     """
-    primes = np.array(sieve_of_eratosthenes(num))
+    primes = sieve_of_eratosthenes(num)
     num_primes = len(primes)
-    res = {1: []}
-    if(num_primes == 0):
-        return res
-    max_powers = np.array([int(np.log(num)/np.log(prime)) for prime in primes])
-    powers = np.array([0 for i in range(num_primes)])
-    increment_sequence(powers, max_powers)
-    i = 0
-    stop = False
+    res = dict([(x,[]) for x in range(1, num+1)])
+    prev_time_diff, time_diff = 0,0
 
-    while(stop == False):
-        product = np.prod(primes ** powers)
-        if(product > num):
-            stop = not increment_sequence(powers, max_powers, skip=True)
-            continue
-        res[product] = [(prime,power) for prime,power in zip(primes,powers) if power > 0]
-        stop = not increment_sequence(powers, max_powers)
-
+    for j,prime in enumerate(primes):
+        print(f"{100 * j / num_primes : .2f}% complete.", end="\r")
+        # orders of divisibility for the specific prime
+        prime_orders = dict([(x, 0) for x in range(1, num+1)])
+        i = 1
+        product = prime
+        while(product <= num):
+            order = prime_orders[i] + 1
+            prime_orders[product] = order 
+            res[product] += [(prime, order)]
+            i += 1
+            product = prime * i
+    
     return res
 
 def factorization_to_divisors(factorization: list[tuple[int,int]]):
@@ -271,5 +270,6 @@ def amicable_numbers_up_to(num: int):
     return list(set(res))
 
 if(__name__ == "__main__"):
-    for num in pandigitals(reverse = True):
-        print(num)
+    prime_factorizations = str(factorize_up_to(10**5))
+    with open("prime_factorizations_1000000.txt","w") as file:
+        file.write(prime_factorizations)
