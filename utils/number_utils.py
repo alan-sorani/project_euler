@@ -131,8 +131,7 @@ def factorize_up_to(num: int):
     res = dict([(x,[]) for x in range(1, num+1)])
     prev_time_diff, time_diff = 0,0
 
-    for j,prime in enumerate(primes):
-        print(f"{100 * j / num_primes : .2f}% complete.", end="\r")
+    for prime in primes:
         # orders of divisibility for the specific prime
         prime_orders = dict([(x, 0) for x in range(1, num+1)])
         i = 1
