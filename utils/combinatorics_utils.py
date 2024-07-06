@@ -90,6 +90,88 @@ def sublist_generator(
             continue
         raise ValueError("Generator unable to handle received value.")
 
+class PositiveIntSet():
+    """
+    A class for computing combinatorical data on a set of positive integers.
+
+    Parameters
+    ----------
+    int_set : set[int]
+        A set of positive integers.
+
+    Attributes
+    ----------
+    int_set : set[int]
+    sorted_list : list[int]
+        A sorted list containing the same elements as the set.
+    """
+    def __init__(self, int_set : set[int]):
+        self.int_set = int_set.copy()
+        int_list = list(int_set)
+        int_list.sort()
+        self.sorted_list = int_list
+
+    @cache
+    def sums_of_k_no_order(
+            self,
+            num : int,
+            k : int,
+            max_summand : int
+        ) -> int:
+        """
+        Computes the number of ways to write a non-negative integer as the sum of k integers from a given sorted list of non-negative integers and where none of the summands exceeds a given value.
+        
+        Parameters
+        ----------
+        num : int
+            A non-negative integer.
+        k : int
+            A positive integer.
+        summands : set[int]
+            A sorted list of non-negative integers.
+        max_summand : int
+            An integer such that the summands in the counted options don't exceed this.
+
+        Returns
+        -------
+        int
+            The number of ways to write num as the sum of k numbers from summands, none of which exceeds max_summand.
+        """
+        if (k == 0):
+            return int(num == 0)
+        if (k == 1):
+            return int((num <= max_summand) and (num in self.int_set))
+        if (num < self.sorted_list[0]):
+            return 0
+        
+        result = 0
+        # iterate over the highest number in the sum
+        for summand in self.sorted_list:
+            if(summand > max_summand):
+                break
+            new_max_summand = np.min([num - summand, summand])
+            result += self.sums_of_k_no_order(
+                num - summand,
+                k - 1,
+                new_max_summand
+            )
+        
+        return result
+
+    def sums_no_order(
+            self,
+            num : int,
+        ) -> int:
+        """
+        Computes the number of ways to write a number as the sum of elements from int_set, where different orderings of the same way count as one.
+        """
+        if(self.sorted_list[0] == 0):
+            return float('inf')
+        res = 0
+        for k in range(1, num+1):
+            res += self.sums_of_k_no_order(num, k, num)
+        return res
+
 @cache
 def sums_of_k_naturals_no_order(num : int, k : int, max_summand : int):
     if (k < 1):
