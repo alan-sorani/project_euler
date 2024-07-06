@@ -2,6 +2,73 @@ import numpy as np
 import itertools
 from numpy import floor,sqrt
 from itertools import permutations
+from functools import cache
+
+class IntsUpTo:
+    """
+    A class representing non-negative integers up to a given maximal integer.
+    Contains number-theoretic methods that benefit from knowing an upper bound.
+    
+    Parameters
+    ----------
+    max_num : int
+        A positive integer representing the maximum integer for the set of integers in the class.
+
+    Attributes
+    ----------
+    max_num : int
+    primes : list[int]
+        A list of all the positive prime integers up to max_num, in increasing order.
+    """
+
+    def __init__(self, max_num : int):
+        if(not isinstance(max_num, int)):
+            raise ValueError("__init__ method for class IntsUpTo received a non-integer value.")
+        if(max_num < 1):
+            raise ValueError("__init__ method for class IntsUpTo received a non-positive integer.")
+        self.max_num = max_num
+        self.primes = sieve_of_eratosthenes(max_num) 
+
+    @cache
+    def sum_of_divisors(self, num : int) -> int:
+        """
+        Returns the sum of divisors of a non-negative integer.
+
+        Parameters
+        ----------
+        num : int
+            A non-negative integer.
+
+        Returns
+        -------
+        int
+            The sum of divisors of num.
+        """
+        if(num < 0):
+            raise ValueError("Function sum_divisors of class IntsUpTo "
+                             "received a negative value.")
+        if(num in {0,1}):
+            return num
+        temp = num
+        i = 0
+        res = -1
+        for prime in self.primes:
+            if(prime**2 > temp):
+                return temp + 1
+            deg = 0
+            while(temp % prime == 0):
+                temp /= prime
+                deg += 1
+            if(deg > 0):
+                res = np.sum([prime**i for i in range(deg+1)]) * self.sum_of_divisors(temp)
+                break
+        if(res == -1):
+            raise ArithmeticError(f"Couldn't find a divisor of {num}.")
+        if(res <= num):
+            raise ArithmeticError(f"Calculated sum of divisors {res} for {num}, "
+                                  "where the latter should be smaller.")
+        return res
+        
 
 def pandigitals(reverse : False):
     """
@@ -17,7 +84,7 @@ def pandigitals(reverse : False):
             yield int(''.join(perm))
         num_digits += (-1) if reverse else 1
 
-def is_prime(n : int):
+def is_prime(n : int) -> bool:
     result = True
     i = 1
     while(result == True and i<floor(sqrt(n))):
@@ -26,7 +93,7 @@ def is_prime(n : int):
             result = False
     return result
 
-def sieve_of_eratosthenes(num : int):
+def sieve_of_eratosthenes(num : int) -> list[int]:
     """
     Returns a list containing all the integers up to a given number. 
 
@@ -51,7 +118,8 @@ def sieve_of_eratosthenes(num : int):
         i = i + 1
     return [i for i in range(2, num + 1) if result[i]]
 
-def index_iterator(shape):
+
+def index_iterator(shape) -> itertools.product:
     """
     Returns an iterator of indices for an array of the given shape.
 
@@ -68,7 +136,7 @@ def index_iterator(shape):
     product = itertools.product(*ranges)
     return product
 
-def increment_sequence(sequence: list[int], max_vals: list[int], skip = False):
+def increment_sequence(sequence: list[int], max_vals: list[int], skip = False) -> bool:
     """
     Increments the value of a sequence of numbers such that the value at the smallest index is increased by 1 if possible, or becomes 0 and carries over to the next index if not. If skip is True, instead set the left-most non-zero value to 0 and increment the value following it by 1.
 
@@ -114,7 +182,7 @@ def increment_sequence(sequence: list[int], max_vals: list[int], skip = False):
             break
     return True
 
-def factorize_up_to(num: int):
+def factorize_up_to(num: int) -> dict[int,int]:
     """
     Returns a dictionary with keys being all the numbers up to num, and the values are the factorizations of these numbers.
 
@@ -144,7 +212,7 @@ def factorize_up_to(num: int):
     
     return res
 
-def factorization_to_divisors(factorization: list[tuple[int,int]]):
+def factorization_to_divisors(factorization: list[tuple[int,int]]) -> list[int]:
     """
     Takes a factorization of a number as outputted by factorize_up_to and returns a list of the number's divisors.
 
@@ -168,51 +236,7 @@ def factorization_to_divisors(factorization: list[tuple[int,int]]):
         res += [np.prod(np.array(primes) ** np.array(powers))]
     return res
 
-def divisors_up_to(num: int):
-    """
-    Returns a dictionary with keys being all the numbers up to num, and the value for each number is a list of its divisors.
-
-    Parameters
-    ----------
-    num: int
-        A positive integer.
-    Returns
-    -------
-    dict[int, list[int]]
-        A dictionary with keys being all the positive integers up to num, and the value for each number is a list of its divisors.
-    """
-    divisors = {}
-    factorizations = factorize_up_to(num)
-    for key,value in factorizations.items():
-        divisors[key] = factorization_to_divisors(value)
-    return divisors
-
-
-def factorization_to_divisors(factorization: list[tuple[int,int]]):
-    """
-    Takes a factorization of a number as outputted by factorize_up_to and returns a list of the number's divisors.
-
-    Parameters
-    ----------
-    factorization: list[tuple[int,int]]
-        A factorization of a positive integer, as outputted by factorize_up_to.
-    Returns
-    -------
-    list[int]
-        A list of the number's divisors.
-    """
-    res = []
-    length = len(factorization)
-    if(length == 0):
-        return [1]
-    primes = [factorization[i][0] for i in range(length)]
-    shape = [factorization[i][1]+1 for i in range(length)]
-    list_powers = index_iterator(shape = shape)
-    for powers in list_powers:
-        res += [np.prod(np.array(primes) ** np.array(powers))]
-    return res
-
-def divisors_up_to(num: int):
+def divisors_up_to(num: int) -> dict[int, list[int]]:
     """
     Returns a dictionary with keys being all the numbers up to num, and the value for each number is a list of its divisors.
 
