@@ -3,6 +3,7 @@ import itertools
 from numpy import floor,sqrt
 from itertools import permutations
 from functools import cache
+from math import comb as binom
 
 class IntsUpTo:
     """
@@ -69,6 +70,38 @@ class IntsUpTo:
                                   "where the latter should be smaller.")
         return res
         
+def polygonal_number(sides : int, n : int) -> int:
+    """
+    Computes a polygonal number.
+
+    Parameters
+    ----------
+    sides : int
+        The number of sides of the polygon.
+    n : int
+        The index for the polygonal number.
+
+    Returns
+    -------
+    int
+        The n'th polygonal number where the polygon is with the given number of sides.
+    """
+    return (sides - 2) * binom(n,2) + n
+
+def get_polygonal_index(sides : int, n : int) -> int:
+    """
+    Returns the index of a number as polygonal number with a given number of sides,
+    or -1 if there's no such index.
+    """
+    temp = 8 * (sides - 2) * n + (sides - 4)**2
+    temp_sqrt = int(np.round(np.sqrt(temp)))
+    if(temp_sqrt ** 2 != temp):
+        return -1
+    numerator = temp_sqrt + (sides - 4)
+    denominator = 2 * (sides - 2)
+    if(numerator % denominator != 0):
+        return -1
+    return int(numerator / denominator)
 
 def pandigitals(reverse : False):
     """
