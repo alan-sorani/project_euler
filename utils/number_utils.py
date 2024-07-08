@@ -93,6 +93,12 @@ def get_polygonal_index(sides : int, n : int) -> tuple[int,bool]:
     Returns the index of the smallest polygonal with the given number of sides that is at most as large as the given number,
     and True if the number itself is polygonal with that number of sides, or False otherwise.
     """
+    if(sides == 2):
+        n_sqrt = int(np.floor(np.sqrt(n)))
+        is_polygonal = True
+        if(n_sqrt ** 2 != n):
+            is_polygonal = False
+        return (n_sqrt, is_polygonal)
     temp = 8 * (sides - 2) * n + (sides - 4)**2
     temp_sqrt = int(np.floor(np.sqrt(temp)))
     is_polygonal = True
