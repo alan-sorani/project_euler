@@ -88,20 +88,21 @@ def polygonal_number(sides : int, n : int) -> int:
     """
     return (sides - 2) * binom(n,2) + n
 
-def get_polygonal_index(sides : int, n : int) -> int:
+def get_polygonal_index(sides : int, n : int) -> tuple[int,bool]:
     """
-    Returns the index of a number as polygonal number with a given number of sides,
-    or -1 if there's no such index.
+    Returns the index of the smallest polygonal with the given number of sides that is at most as large as the given number,
+    and True if the number itself is polygonal with that number of sides, or False otherwise.
     """
     temp = 8 * (sides - 2) * n + (sides - 4)**2
-    temp_sqrt = int(np.round(np.sqrt(temp)))
+    temp_sqrt = int(np.floor(np.sqrt(temp)))
+    is_polygonal = True
     if(temp_sqrt ** 2 != temp):
-        return -1
+        is_polygonal = False
     numerator = temp_sqrt + (sides - 4)
     denominator = 2 * (sides - 2)
     if(numerator % denominator != 0):
-        return -1
-    return int(numerator / denominator)
+        is_polygonal = False
+    return (int(numerator / denominator), is_polygonal)
 
 def pandigitals(reverse : False):
     """
