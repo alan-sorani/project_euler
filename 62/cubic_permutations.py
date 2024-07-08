@@ -4,42 +4,38 @@ utils_path = "/".join(dir_path.split("/")[:-1] + ['utils'])
 sys.path.append(utils_path)
 from number_utils import *
 
-from itertools import permutations
+digits = [str(i) for i in range(10)]
 
-cubes_to_skip = set()
-
-def digit_permutations(num : int):
-    num_str = str(num)
-    for permutation in set(permutations(num_str)):
-        num_str = ''.join(permutation)
-        res = int(num_str)
-        if(res >= num):
-            yield res
-
-def test_cubic_permutations(num : int, num_permutations : int) -> bool:
-    count = 0
-    for perm in digit_permutations(num):
-        root = int(np.round(perm**(1/3)))
-        if(root ** 3 == perm):
-            count += 1
-            if(perm != num):
-                cubes_to_skip.add(perm)
-        if(count > num_permutations):
+def are_permutations(num_1 : int, num_2 : int):
+    str_1 = str(num_1)
+    str_2 = str(num_2)
+    for digit in digits:
+        if(str_1.count(digit) != str_2.count(digit)):
             return False
-    return (count == num_permutations)
+    return True
 
-def find_cube_with_cubic_permutations():
-    n = 0
-    found = False
-    while(not found):
-        n += 1
-        cube = n**3
-        if(cube in cubes_to_skip):
-            cubes_to_skip.remove(cube)
-            continue
-        found = test_cubic_permutations(n**3, 5)
-    return n**3
+def solution():
+    max_digits = 16
+    target = 5
+
+    for num_digits in range(1,max_digits+1):
+        min_root = int(10**((num_digits-1)/3))
+        max_root = int(10**(num_digits/3))
+        cubes = [i**3 for i in range(min_root-100, max_root+100) if (i**3 >= 10**(num_digits - 1) and i**3 <= 10**num_digits)]
+        while(len(cubes) != 0):
+            cube = cubes[0]
+            cube_permutations = set()
+            for other_cube in cubes:
+                if(are_permutations(cube, other_cube)):
+                    cube_permutations.add(other_cube)
+            num_permutations = len(cube_permutations)
+            if(num_permutations == target):
+                return cube
+            cubes = list(set(cubes) - cube_permutations)
+            cubes.sort()
+    return -1
 
 
 if __name__ == "__main__":
-    print(find_cube_with_cubic_permutations())
+    res = solution()
+    print(res)
