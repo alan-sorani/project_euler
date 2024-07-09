@@ -12,7 +12,7 @@ T = TypeVar('T')
 
 def partitions(list_ : list[T], num_sublists : int):
     """
-    Takes a list of different elements, and generates all partitions of that list into a given amount of sublists. 
+    Takes a list of different elements, and generates all partitions of that list into a given amount of non-empty sublists. 
 
     Parameters
     ----------
@@ -44,6 +44,26 @@ def partitions(list_ : list[T], num_sublists : int):
     # place the first element on its own
     for smaller_partition in partitions(list_[1:], num_sublists - 1):
         yield [[first]] + smaller_partition
+
+def partitions_with_empties(list_ : list[T], num_sublists : int):
+    """
+    Takes a list of different elements, and generates all partitions of that list into a given amount of sublists, where sublists can be empty. 
+
+    Parameters
+    ----------
+    list_ : list[T]
+        A list of different values.
+    num_sublists : int
+        The number of sublists in the partitions
+
+    Yields
+    ------
+    list[list[T]]
+        A partition of list_ into num_sublists possibly-empty sublists. This goes over all such partitions.
+    """
+    for num_empties in range(num_sublists):
+        for partition in partitions(list_, num_sublists - num_empties):
+            yield [[]]*num_empties + partition
 
 def increment_sublist_index(
         indices : list[int],
