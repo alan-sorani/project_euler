@@ -4,8 +4,46 @@ from numpy import pi
 from math import comb as binom
 from math import factorial
 from sympy import var, I
-from typing import Callable
+from typing import Callable, TypeVar
 from functools import cache
+
+# generic types
+T = TypeVar('T')
+
+def partitions(list_ : list[T], num_sublists : int):
+    """
+    Takes a list of different elements, and generates all partitions of that list into a given amount of sublists. 
+
+    Parameters
+    ----------
+    list_ : list[T]
+        A list of different values.
+    num_sublists : int
+        The number of sublists in the partitions
+
+    Yields
+    ------
+    list[list[T]]
+        A partition of list_ into num_sublists sublists. This goes over all such partitions.
+    """
+    if(len(set(list_)) != len(list_)):
+        raise ValueError("Function partitions(...) received a list with repeating elements.")
+    if(num_sublists > len(list_)):
+        return
+    if(num_sublists == 1):
+        yield [list_]
+        return
+    if(num_sublists == len(list_)):
+        yield [[x] for x in list_]
+        return
+
+    first = list_[0]
+    for smaller_partition in partitions(list_[1:], num_sublists):
+        for i, sublist in enumerate(smaller_partition):
+            yield smaller_partition[:i] + [[first] + sublist] + smaller_partition[i+1:]
+    # place the first element on its own
+    for smaller_partition in partitions(list_[1:], num_sublists - 1):
+        yield [[first]] + smaller_partition
 
 def increment_sublist_index(
         indices : list[int],
