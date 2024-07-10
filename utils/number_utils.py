@@ -110,7 +110,7 @@ def get_polygonal_index(sides : int, n : int) -> tuple[int,bool]:
         is_polygonal = False
     return (int(numerator / denominator), is_polygonal)
 
-def pandigitals(reverse : False):
+def pandigitals(reverse : bool = False):
     """
     Creates a generator for pandigital numbers.
     """
