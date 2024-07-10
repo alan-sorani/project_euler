@@ -1,7 +1,7 @@
 import numpy as np
 import itertools
 from numpy import floor,sqrt
-from itertools import permutations
+from itertools import permutations, combinations
 from functools import cache
 from math import comb as binom
 
@@ -110,12 +110,26 @@ def get_polygonal_index(sides : int, n : int) -> tuple[int,bool]:
         is_polygonal = False
     return (int(numerator / denominator), is_polygonal)
 
+def different_digit_numbers():
+    """
+    Creates a generator for positive integers with different digits.
+    """
+    digit_strs = [str(d) for d in range(1,10)]
+    num_digits = 1
+    while(num_digits < 10):
+        for comb in combinations(digit_strs, num_digits):
+            for perm in permutations(comb):
+                yield int(''.join(perm))
+        num_digits += 1
+
+
+
 def pandigitals(reverse : bool = False):
     """
     Creates a generator for pandigital numbers.
     """
     num_digits = 9 if reverse else 1
-    while(num_digits > 1):
+    while(num_digits > 1 if reverse else num_digits < 10):
         digits = ''.join([str(d) for d in range(1, num_digits + 1)])
         perms = list(permutations(digits))
         if(reverse):
