@@ -122,8 +122,6 @@ def different_digit_numbers():
                 yield int(''.join(perm))
         num_digits += 1
 
-
-
 def pandigitals(reverse : bool = False):
     """
     Creates a generator for pandigital numbers.

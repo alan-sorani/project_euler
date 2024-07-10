@@ -2,4 +2,4 @@
 - solve 83 using dijkstra's
 - in combinatorics_utils, add an option for sum_of_k_naturals to set an upper bound for the summands
 - solve 94 using Pell's equations
-- Improve algorithm for factorizing all positive integers up to n. Just go over each prime, and for each, write its order of division for each of its multiples. Then solve 95.
+- Improve algorithm for factorizing all positive integers up to n. Just go over each prime, and for each, write its order of division for each of its multiples.
