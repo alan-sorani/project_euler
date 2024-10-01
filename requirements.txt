@@ -227,5 +227,4 @@ wrapt==1.16.0
 xdg==5
 xkit==0.0.0
 yarg==0.1.9
-zipp==1.0.0
 zope.interface==5.4.0
