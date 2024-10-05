@@ -1,0 +1,2 @@
+Note that the solution can be significantly faster if we assume that n can have at most 2 prime factors. In that case, we can go over dictionary-ordered pairs of primes where the order of the prime numbers up to 5*10**6 is reversed.
+However, it is theoretically possible that the smallest value of n/phi(n) where phi(n) is a permutation of n is achieved when n has 3 distinct prime factors. Solutions in the forum seem to ignore this, and thus achieve much better performance.

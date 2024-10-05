@@ -395,6 +395,5 @@ def amicable_numbers_up_to(num: int):
     return list(set(res))
 
 if(__name__ == "__main__"):
-    prime_factorizations = str(factorize_up_to(10**5))
-    with open("prime_factorizations_1000000.txt","w") as file:
-        file.write(prime_factorizations)
+    prime_factorizations = str(factorize_up_to(10**4))
+    print(prime_factorizations)
