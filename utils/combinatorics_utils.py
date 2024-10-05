@@ -94,7 +94,8 @@ def increment_sublist_index(
     incremented_index = None
     incremented_value = None
     for i in range(len(indices) - 1 - skip, -1, -1):
-        if((indices[i] < max_index) and ((i == len(indices) - 1) or (indices[i] + 1 < indices[i+1]))):
+        if((i == 0) or (indices[i] < max_index - (len(indices) - i))):
+            print(i)
             indices[i] += 1
             incremented_index = i
             incremented_value = indices[i]
