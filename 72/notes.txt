@@ -1,0 +1,71 @@
+Since the fraction $\frac{n}{d}$ is reduced if and only if $n, d$ are coprime, and can be otherwise rewritten as a reduced fraction of the form $\frac{n'}{d'}$ for $n' < n$ and $d' < d$, we want to sum the number of numbers smaller than $d$ and coprime to it across all values $2 \leq d \leq 10^6$.
+
+Using the Möbius inversion theorem (e.g. see Chapter 2, Theorem 2 of Ireland and Rosen's A Classical Introduction to Number Theory) we get that $\phi(k) = k \sum_{d \mid k} \frac{\mu(d)}{d}$, where $\phi$ is Euler's totient function and where $\mu(n)$ equals $0$ if $n$ is non-square-free, and otherwise $-1$ to the number of prime factors of $n$. We thus want to compute \[\sum_{k = 2}^{10^6} k \sum_{d \mid k} \frac{\mu(d)}{d} = \sum_{d = 2}^{10^6} \sum_{\substack{d \mid k \\ k \leq 10^6}} k \frac{\mu(d)}{d} = \sum_{d=2}^{10^6} \mu(d) \sum_{\substack{d \mid k \\ k \leq 10^6}} \frac{k}{d} = \sum_{d = 2}^{10^6} \mu(d) \sum_{i = 0}^{\lfloor{10^6 / d}\rfloor} i = \frac{1}{2} \left(\sum_{d=1}^{10^6} \mu(d) \lfloor{10^6/d\rfloor}(1 + \lfloor{10^6/d\rfloor})\right) - 1 \text{.}\]
+
+I do this by computing the right-most expression, where I go over the non-square-free numbers from $1$ to $10^6$ by going over the possible lists of prime factors and multiplying them, as this trivializes the computation of $\mu$.
+
+The result is then given by taking the value of the following function at $n = 10^6$ and subtracting $1$.
+
+This takes about 3 seconds on 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz.
+
+[code=python]
+def totient_summatory_function(n : int):
+    primes = np.array(sieve_of_eratosthenes(n))
+    num_primes = len(primes)
+    res = n * (n+1)
+    count = 0
+
+    for num_factors in range(1, len(primes) + 1):
+        if(np.prod(primes[:num_factors]) > n):
+            break
+        mu = (-1)**num_factors
+        unsigned_summands = 0
+        
+        factor_indices = [i for i in range(num_factors)]
+        skip = 0
+        stop = False
+        while(not stop):
+            k = int(np.prod(primes[factor_indices]))
+
+            if(k > n):
+                skip += 1
+                if(skip >= len(factor_indices)):
+                    break
+            else:
+                skip = 0
+                quot_floor = int(np.floor(n/k))
+                unsigned_summands += quot_floor * (1 + quot_floor)
+
+            stop = not increment_sublist_index(factor_indices, num_primes - 1, skip)
+
+        res += mu * unsigned_summands
+        
+    return res / 2
+[/code]
+
+Where the auxilary function used for going over all the prime subsets is the following.
+
+[code=python]
+def increment_sublist_index(
+        indices : list[int],
+        max_index : int,
+        skip : int = 0
+    ):
+    if(skip >= len(indices)):
+        raise ValueError("Received value of skip variable exceeds maximal possible value.")
+    if(indices == [max_index - (len(indices) - i - 1) for i in range(len(indices))]):
+        return False
+    incremented_index = None
+    incremented_value = None
+    for i in range(len(indices) - 1 - skip, -1, -1):
+        if((i == 0) or (indices[i] < max_index - (len(indices) - i - 1))):
+            indices[i] += 1
+            incremented_index = i
+            incremented_value = indices[i]
+            break
+    new_value = incremented_value + 1
+    for i in range(incremented_index+1, len(indices), 1):
+        indices[i] = new_value
+        new_value += 1
+    return True
+[/code]

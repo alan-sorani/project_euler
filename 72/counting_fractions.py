@@ -6,6 +6,7 @@ sys.path.append(utils_path)
 from number_utils import *
 from combinatorics_utils import *
 import numpy as np
+import timeit
 
 '''
 We want to sum phi(d) over d between 2 and 10**6, where phi(n) is Euler's totient function.
@@ -16,42 +17,43 @@ Using Mobius inversion, we have
 :math:`\Phi(n) = \frac{1}{2} \sum_{k=1}^n \mu(k) \floor{\frac{n}{k}} \left( 1 + \floor{\frac{n}{k}} \right)`, where :math:`\mu` is the Mobius function, being 0 for numbers that aren't square-free, and -1 to the number of prime factors otherwise.
 '''
 
-def solution():
-    n = 10**6
+def totient_summatory_function(n : int):
     primes = np.array(sieve_of_eratosthenes(n))
     num_primes = len(primes)
-    res = 0
-    
-    for num_primes in range(1, len(primes)):
-        if(np.prod(primes[:num_primes]) > n):
+    res = n * (n+1)
+    count = 0
+
+    for num_factors in range(1, len(primes) + 1):
+        if(np.prod(primes[:num_factors]) > n):
             break
-        mu = 1 if (num_primes % 2 == 0) else -1
+        mu = (-1)**num_factors
         unsigned_summands = 0
         
-        factor_indices = [i for i in range(num_primes)]
+        factor_indices = [i for i in range(num_factors)]
         skip = 0
         stop = False
         while(not stop):
-            print(factor_indices)
             k = int(np.prod(primes[factor_indices]))
 
             if(k > n):
                 skip += 1
                 if(skip >= len(factor_indices)):
                     break
-
             else:
                 skip = 0
-                quotient_floor = int(np.floor(n/k))
-                unsigned_summands += quotient_floor * (1 + quotient_floor)
+                quot_floor = int(np.floor(n/k))
+                unsigned_summands += quot_floor * (1 + quot_floor)
 
             stop = not increment_sublist_index(factor_indices, num_primes - 1, skip)
 
         res += mu * unsigned_summands
         
-    res = res / 2
-    return res
+    return res / 2
         
+def solution():
+    return (totient_summatory_function(10**6) - 1)
 
 if __name__ == "__main__":
-    print(solution())
+    timeit_runs = 10
+    solution_time = timeit.timeit(lambda: solution(), number=timeit_runs)
+    print(f"Found solution {solution()} in {solution_time} seconds on average across {timeit_runs} runs.")
