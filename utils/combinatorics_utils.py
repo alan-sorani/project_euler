@@ -89,13 +89,12 @@ def increment_sublist_index(
     """
     if(skip >= len(indices)):
         raise ValueError("Received value of skip variable exceeds maximal possible value.")
-    if(indices == [i + max_index - len(indices) for i in range(len(indices))]):
+    if(indices == [max_index - (len(indices) - i - 1) for i in range(len(indices))]):
         return False
     incremented_index = None
     incremented_value = None
     for i in range(len(indices) - 1 - skip, -1, -1):
-        if((i == 0) or (indices[i] < max_index - (len(indices) - i))):
-            print(i)
+        if((i == 0) or (indices[i] < max_index - (len(indices) - i - 1))):
             indices[i] += 1
             incremented_index = i
             incremented_value = indices[i]
