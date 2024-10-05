@@ -322,7 +322,7 @@ def sums_of_naturals(
         The number of ways to write n as the sum of natural numbers. If order = True, the ordering of the numbers matters, otherwise it doesn't.
     """
     if(not order): 
-        return sums_of_naturals_no_order(num, num)
+        return partition_function(num)
     
     res = 0
     for k in range(1, num + 1):
@@ -332,6 +332,38 @@ def sums_of_naturals(
                     order=True,
                     zeros=False
                 )
+    return res
+
+def generalized_pentagonal(n : int) -> int:
+    '''
+    Returns the n'th generalized pentagonal number.
+    '''
+    if(n == 0):
+        return 0
+    if(n % 2 == 1):
+        m = (n + 1) / 2
+    else:
+        m = -n / 2
+    return int(m * (3 * m - 1)/2)
+
+@cache
+def partition_function(n : int) -> int:
+    '''
+    Returns the n'th value of the partition function.
+    '''
+    if(n in {0,1}):
+        return 1
+    i = 1
+    pentagonal = 1
+    res = 0
+    while(pentagonal <= n):
+        pentagonal = generalized_pentagonal(i)
+        if(i % 4 in {1,2}):
+            res += partition_function(n - pentagonal)
+        else:
+            res -= partition_function(n - pentagonal)
+        pentagonal = generalized_pentagonal(i)
+        i += 1
     return res
 
 if __name__ == "__main__":
