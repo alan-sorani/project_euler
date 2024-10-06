@@ -36,7 +36,7 @@ def continued_fraction_of_root(num : int):
 
     while(not repeated):
         prev_coefficients += [(c,d)]
-        int_part = np.floor((np.sqrt(num) + c)/d)
+        int_part = int(np.floor((np.sqrt(num) + c)/d))
         res += [int_part]
         c -= int_part * d
         # take the coefficients c,d for the inverse of the previous fraction minus the integral part
