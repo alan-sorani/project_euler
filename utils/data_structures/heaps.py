@@ -84,6 +84,11 @@ class FibonacciHeap:
         ):
             self.min_node = tree.root
 
+    def meld(self, other : FibonacciHeap):
+        self.trees += other.trees
+        if(other.min_node.value < self.min_node.value):
+            self.min_node = other.min_node
+
     def get_string(self):
         res = ""
         for tree in self.trees:
